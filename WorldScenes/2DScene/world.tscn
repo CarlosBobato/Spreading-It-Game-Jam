@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://cjkjpq7jcp28s"]
+
+[ext_resource type="PackedScene" uid="uid://dpf310fgdlv2o" path="res://PlayerScenes/player.tscn" id="1_eywy4"]
+[ext_resource type="PackedScene" uid="uid://dttffmy7mkr7w" path="res://TileMaps/debug_map.tscn" id="2_isrbe"]
+[ext_resource type="PackedScene" uid="uid://db0vs1d23yk7d" path="res://EnemyScenes/enemy.tscn" id="3_w5xct"]
+
+[node name="World" type="Node2D"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+visible = false
+position = Vector2(-292, 601)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+position = Vector2(208, 204)
+polygon = PackedVector2Array(91, 65, 476, 60, 935, 62, 1229, 57, 1247, 711, 1140, 706, 713, 698, 719, 620, 1138, 583, 1138, 118, 461, 102, 219, 121, 209.474, 545.296, 615, 612, 612, 695, 206, 700, 91, 711)
+
+[node name="DebugMap" parent="." instance=ExtResource("2_isrbe")]
+position = Vector2(-3, 3)
+scale = Vector2(1.01787, 1.01787)
+
+[node name="Player" parent="." instance=ExtResource("1_eywy4")]
+position = Vector2(399, 395)
+scale = Vector2(0.480001, 0.480001)
+
+[node name="enemy2" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_w5xct")]
+position = Vector2(581, 545)
+scale = Vector2(0.296983, 0.296983)
+player = NodePath("../Player")
+
+[node name="enemy" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_w5xct")]
+position = Vector2(920, 173)
+scale = Vector2(0.154753, 0.154753)
+player = NodePath("../Player")
