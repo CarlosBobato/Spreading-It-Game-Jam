@@ -6,7 +6,11 @@ extends CharacterBody2D
 @export var Acceleration = 1500
 @export var Friction = 1200
 
+@export var current_map: Node2D
+
 @onready var axis = Vector2.ZERO
+
+@onready var DamageTimer = $DamageTimer
 
 # essa função é o que determina cada call to render,
 # sendo delta o "timer" da engine,
@@ -59,8 +63,33 @@ func apply_movement(acceleration):
 
 # fim da movimentação do personagem
 
+@export var max_health = 7
+
+@export var current_health = max_health
+
 func apply_damage():
 	
 	modulate = Color( 1, 0.1, 0.2)
 	
+	if current_health == 0:
+		current_map.reset_scene()
+		pass # death condition, resets the scene
+		
+	else:
+		current_health -= 1
+		
+	if DamageTimer:
+		DamageTimer.start()
 	pass #do something
+
+func is_alive():
+	if current_health == 0:
+		return false
+	else:
+		return true
+
+func _on_damage_timer_timeout():
+	
+	modulate = Color(1, 1, 1)
+	
+	pass # Replace with function body.

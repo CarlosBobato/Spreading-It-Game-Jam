@@ -26,10 +26,12 @@ position = Vector2(399, 395)
 scale = Vector2(0.480001, 0.480001)
 current_map = NodePath("..")
 
-[node name="enemy" parent="." node_paths=PackedStringArray("player", "path_timer") instance=ExtResource("3_w5xct")]
-position = Vector2(920, 173)
+[node name="enemy2" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_w5xct")]
+position = Vector2(581, 545)
+scale = Vector2(0.296983, 0.296983)
 player = NodePath("../Player")
-path_timer = NodePath("../PathTimer")
 
-[node name="PathTimer" type="Timer" parent="."]
-autostart = true
+[node name="enemy" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_w5xct")]
+position = Vector2(920, 173)
+scale = Vector2(0.154753, 0.154753)
+player = NodePath("../Player")
