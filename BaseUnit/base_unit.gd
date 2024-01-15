@@ -36,7 +36,11 @@ func _on_detection_area_body_exited(body):
 	pass
 
 func apply_damage():
-	current_health = current_health - 1
+	if current_health <= 1:
+		get_tree().auto_accept_quit
+		pass
+	else:
+		current_health = current_health - 1
 	pass
 
 # Called when the node enters the scene tree for the first time.
