@@ -4,7 +4,10 @@ const speed = 66
 
 @export var player: Node2D
 @export var path_timer: Timer
+
 @onready var navigation_agent := $NavigationAgent2D as NavigationAgent2D
+
+@onready var interaction_shape := $InteractionShape as CollisionObject2D
 
 func _physics_process(delta):
 	var direction = to_local(navigation_agent.get_next_path_position()).normalized()

@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://dj77n252ymdmw"]
+
+[ext_resource type="Script" path="res://BaseUnit/base_unit.gd" id="1_3d14g"]
+[ext_resource type="Texture2D" uid="uid://41argy5xxcp7" path="res://icon.svg" id="1_6ptyx"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5rl40"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_04ce5"]
+radius = 62.6418
+
+[node name="BaseUnit" type="CharacterBody2D"]
+scale = Vector2(0.25, 0.25)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_3d14g")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_6ptyx")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
+[node name="DetectionArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+scale = Vector2(45.3837, 45.3837)
+shape = SubResource("CircleShape2D_5rl40")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_04ce5")
+
+[node name="AttackFrequency" type="Timer" parent="."]
+
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
+[connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]

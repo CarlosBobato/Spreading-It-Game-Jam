@@ -1,9 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://cjkjpq7jcp28s"]
+[gd_scene load_steps=4 format=3 uid="uid://cjkjpq7jcp28s"]
 
 [ext_resource type="PackedScene" uid="uid://dpf310fgdlv2o" path="res://PlayerScenes/player.tscn" id="1_eywy4"]
 [ext_resource type="Script" path="res://WorldScenes/2DScene/world.gd" id="1_w3pms"]
 [ext_resource type="PackedScene" uid="uid://dttffmy7mkr7w" path="res://TileMaps/debug_map.tscn" id="2_isrbe"]
-[ext_resource type="PackedScene" uid="uid://db0vs1d23yk7d" path="res://EnemyScenes/enemy.tscn" id="3_w5xct"]
 
 [node name="World" type="Node2D" node_paths=PackedStringArray("player")]
 script = ExtResource("1_w3pms")
@@ -25,11 +24,6 @@ scale = Vector2(1.01787, 1.01787)
 position = Vector2(399, 395)
 scale = Vector2(0.480001, 0.480001)
 current_map = NodePath("..")
-
-[node name="enemy" parent="." node_paths=PackedStringArray("player", "path_timer") instance=ExtResource("3_w5xct")]
-position = Vector2(920, 173)
-player = NodePath("../Player")
-path_timer = NodePath("../PathTimer")
 
 [node name="PathTimer" type="Timer" parent="."]
 autostart = true

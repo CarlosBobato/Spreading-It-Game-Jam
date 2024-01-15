@@ -21,22 +21,22 @@ func _process(delta):
 
 func spawn_enemy(position):
 	
-	var enemy = load("res://BaseUnit/base_unit.tscn")
+	var enemy = load("res://EnemyScenes/enemy.tscn")
 	var instance = enemy.instantiate()
 	instance.position = position
-	instance.team_index = 2
-	#instance.path_timer = path_timer
+	instance.player = player
+	instance.path_timer = path_timer
 	add_child(instance)
 	
 	pass
 
 func spanw_minion(position):
 	
-	var minion = load("res://BaseUnit/base_unit.tscn")
+	var minion = load("res://MinionScenes/minion.tscn")
 	var instance = minion.instantiate()
 	instance.position = position
-	instance.team_index = 1
-	# instance.path_timer = path_timer
+	instance.player = player
+	instance.path_timer = path_timer
 	add_child(instance)
 	
 	pass

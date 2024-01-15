@@ -19,7 +19,8 @@ func _physics_process(delta):
 		if collision.get_collider() is CharacterBody2D:
 			if player:
 				player.apply_damage()
-		
+				pass
+			pass
 	pass
 
 func make_path():

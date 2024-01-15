@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://dqiigmldmrh82"]
+[gd_scene load_steps=5 format=3 uid="uid://dqiigmldmrh82"]
 
 [ext_resource type="Script" path="res://EnemyScenes/enemy.gd" id="1_kvisl"]
 [ext_resource type="Texture2D" uid="uid://41argy5xxcp7" path="res://icon.svg" id="2_lsiq4"]
@@ -6,9 +6,12 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_bc7ta"]
 radius = 16.4924
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_476dx"]
+radius = 176.119
+
 [node name="minion" type="CharacterBody2D"]
-collision_layer = 2
-collision_mask = 3
+collision_layer = 6
+collision_mask = 7
 motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_kvisl")
@@ -23,3 +26,6 @@ shape = SubResource("CircleShape2D_bc7ta")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 debug_enabled = true
+
+[node name="InteractionShape" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_476dx")
