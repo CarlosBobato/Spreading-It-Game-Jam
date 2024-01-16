@@ -6,7 +6,7 @@ const speed = 66
 @export var path_timer: Timer
 @onready var navigation_agent := $NavigationAgent2D as NavigationAgent2D
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	var direction = to_local(navigation_agent.get_next_path_position()).normalized()
 	velocity = direction * speed
 	move_and_slide()
@@ -17,7 +17,7 @@ func _physics_process(delta):
 	for index in get_slide_collision_count():
 		var collision = get_slide_collision(index)
 		if collision.get_collider() is CharacterBody2D:
-			if player:
+			if player == collision.get_collider():
 				player.apply_damage()
 				pass
 			pass

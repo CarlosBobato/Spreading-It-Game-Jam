@@ -7,8 +7,8 @@
 radius = 16.4924
 
 [node name="enemy" type="CharacterBody2D"]
-collision_layer = 6
-collision_mask = 7
+collision_layer = 2
+collision_mask = 3
 motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_s153n")
@@ -23,4 +23,5 @@ texture = ExtResource("1_fdjdx")
 shape = SubResource("CircleShape2D_bc7ta")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+avoidance_enabled = true
 debug_enabled = true
