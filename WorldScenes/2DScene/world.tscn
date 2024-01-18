@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://cjkjpq7jcp28s"]
+[gd_scene load_steps=5 format=3 uid="uid://cjkjpq7jcp28s"]
 
 [ext_resource type="PackedScene" uid="uid://dpf310fgdlv2o" path="res://PlayerScenes/player.tscn" id="1_eywy4"]
 [ext_resource type="Script" path="res://WorldScenes/2DScene/world.gd" id="1_w3pms"]
 [ext_resource type="PackedScene" uid="uid://dttffmy7mkr7w" path="res://TileMaps/debug_map.tscn" id="2_isrbe"]
+[ext_resource type="PackedScene" uid="uid://c5abnsgt63448" path="res://UnitSpawner/unit_spawner.tscn" id="4_ujfjw"]
 
 [node name="World" type="Node2D" node_paths=PackedStringArray("player")]
 script = ExtResource("1_w3pms")
@@ -21,9 +22,26 @@ position = Vector2(-3, 3)
 scale = Vector2(1.01787, 1.01787)
 
 [node name="Player" parent="." node_paths=PackedStringArray("current_map") instance=ExtResource("1_eywy4")]
-position = Vector2(399, 395)
+position = Vector2(639, 501)
 scale = Vector2(0.480001, 0.480001)
 current_map = NodePath("..")
 
-[node name="PathTimer" type="Timer" parent="."]
+[node name="TurnTimer" type="Timer" parent="."]
 autostart = true
+
+[node name="unit_spawner" parent="." node_paths=PackedStringArray("turn_timer", "world") instance=ExtResource("4_ujfjw")]
+modulate = Color(0, 0.52549, 0.333333, 1)
+position = Vector2(105, 497)
+team_index = 1
+turn_timer = NodePath("../TurnTimer")
+world = NodePath("..")
+
+[node name="unit_spawner2" parent="." node_paths=PackedStringArray("turn_timer", "world") instance=ExtResource("4_ujfjw")]
+modulate = Color(0, 0.368627, 0.552941, 1)
+position = Vector2(994, 171)
+team_index = 2
+turn_timer = NodePath("../TurnTimer")
+world = NodePath("..")
+
+[connection signal="timeout" from="TurnTimer" to="unit_spawner" method="_on_turn_timer_timeout"]
+[connection signal="timeout" from="TurnTimer" to="unit_spawner2" method="_on_turn_timer_timeout"]

@@ -6,6 +6,8 @@ extends CharacterBody2D
 # movement
 @export var base_speed = 35
 
+var enemies:Array
+
 # battle
 var chase_enemy = false
 var enemy: CharacterBody2D
@@ -14,7 +16,7 @@ var enemy: CharacterBody2D
 @onready var navigation_agent := $NavigationAgent2D as NavigationAgent2D
 
 # health values
-@export var max_health = 300
+@export var max_health = 10
 var current_health = max_health
 
 # Detects if an enemy unit entered the zone,
@@ -22,20 +24,29 @@ var current_health = max_health
 # actually an enemy, the unit should proceed to
 # chansing it and finally battling it once they are near enough
 func _on_detection_area_body_entered(body):
-	
-	if "team_index" in body && body.team_index != team_index:
-		enemy = body
-		chase_enemy = true
-	pass
+	if body as CharacterBody2D:
+		if "team_index" in body && body.team_index != team_index:
+			print_debug("body entered detection area")
+			enemies.push_back(body)
+			if enemy == null:
+				enemy = enemies[0]
+				chase_enemy = true
 
 # Detects if a actor has left the detection zone,
 # if said actor is the same enemy that entered earlier
 # allows for desengagement
 func _on_detection_area_body_exited(body):
-	if body == enemy:
-		chase_enemy = false
-		enemy = null
-	pass
+	
+	if enemies.has(body):
+		print_debug("enemy has left the area")
+		enemies.erase(body)
+		if body == enemy:
+			if enemies.is_empty():
+				enemy = null
+				chase_enemy = false
+			else:
+				enemy = enemies.pick_random()
+				chase_enemy = true
 
 func apply_damage():
 	if current_health <= 1:
@@ -50,7 +61,19 @@ func apply_damage():
 func make_path():
 	if enemy:
 		navigation_agent.target_position = enemy.global_position
-	pass
+
+func _on_attack_frequency_timeout():
+	if chase_enemy:
+		make_path()
+	
+	for index in get_slide_collision_count():
+			var collision = get_slide_collision(index)
+			var collider = collision.get_collider()
+			if collider is CharacterBody2D:
+				if chase_enemy:
+					if enemies.has(collider):
+						print_debug("is attacking")
+						collider.apply_damage()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -65,19 +88,5 @@ func _physics_process(_delta):
 	# position += (enemy.position - position)/100
 	move_and_slide()
 	
-	if chase_enemy:
-		make_path()
-		pass
-		
-		
-	for index in get_slide_collision_count():
-		var collision = get_slide_collision(index)
-		if collision.get_collider() is CharacterBody2D:
-			if chase_enemy:
-				if current_health > 0:
-					print_debug("is attacking")
-					enemy.apply_damage()
-				pass
-			pass
-			
-	pass
+	if enemy != null && !enemies.is_empty():
+		enemy = enemies[0]

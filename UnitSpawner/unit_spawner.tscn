@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://c5abnsgt63448"]
+
+[ext_resource type="Script" path="res://UnitSpawner/unit_spawner.gd" id="1_ew31j"]
+[ext_resource type="Texture2D" uid="uid://41argy5xxcp7" path="res://icon.svg" id="1_pv4k6"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6o0ja"]
+radius = 257.194
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f0qtx"]
+radius = 44.1814
+
+[node name="unit_spawner" type="StaticBody2D"]
+collision_mask = 7
+script = ExtResource("1_ew31j")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("1_pv4k6")
+
+[node name="ControlArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ControlArea"]
+shape = SubResource("CircleShape2D_6o0ja")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_f0qtx")
+
+[connection signal="body_entered" from="ControlArea" to="." method="_on_control_area_body_entered"]
+[connection signal="body_exited" from="ControlArea" to="." method="_on_control_area_body_exited"]
