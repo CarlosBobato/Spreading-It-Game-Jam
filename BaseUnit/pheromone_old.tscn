@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://di4re1o3jvy3f"]
+
+[ext_resource type="Script" path="res://BaseUnit/pheromone_old.gd" id="1_iuoqd"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_c7wct"]
+radius = 72.6911
+
+[node name="pheromone_old" type="Area2D"]
+script = ExtResource("1_iuoqd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.1, 0.1)
+shape = SubResource("CircleShape2D_c7wct")
+disabled = true

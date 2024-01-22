@@ -13,31 +13,29 @@ func _ready():
 func _process(_delta):
 	if Input.is_action_just_pressed("MouseLeft"):
 		spawn_enemy(get_global_mouse_position())
-		pass
 	
 	if Input.is_action_just_pressed("MouseRight"):
 		spanw_minion(get_global_mouse_position())
-		pass
 
 func spawn_unit(spawn_area: Area2D, team_index: int):
-	var unit = load("res://BaseUnit/base_unit.tscn")
-	var instance = unit.instantiate()
-	
-	var random = RandomNumberGenerator.new()
-	random.randomize()
-	
-	instance.position.x = spawn_area.global_position.x + random.randi_range(-7, 7)
-	instance.position.y = spawn_area.global_position.y + random.randi_range(-7, 7)
-	instance.team_index = team_index
-	
-	if team_index == 1:
-		instance.get_node("Sprite2D").modulate = Color(0, 0, 1)
-	elif team_index == 2:
-		instance.get_node("Sprite2D").modulate = Color(0, 1, 0)
-	
-	add_child(instance)
-	
-	pass
+	if team_index != 0:
+		var unit = load("res://BaseUnit/base_unit.tscn")
+		var instance = unit.instantiate()
+		
+		var random = RandomNumberGenerator.new()
+		random.randomize()
+		
+		instance.position.x = spawn_area.global_position.x + random.randi_range(-7, 7)
+		instance.position.y = spawn_area.global_position.y + random.randi_range(-7, 7)
+		instance.team_index = team_index
+		instance.turn_timer = turn_timer
+		
+		if team_index == 1:
+			instance.get_node("Sprite2D").modulate = Color(0, 1, 0)
+		elif team_index == 2:
+			instance.get_node("Sprite2D").modulate = Color(0, 0, 1)
+		
+		add_child(instance)
 
 func spawn_enemy(click_position):
 	
@@ -45,11 +43,9 @@ func spawn_enemy(click_position):
 	var instance = enemy.instantiate()
 	instance.position = click_position
 	instance.team_index = 2
-	instance.get_node("Sprite2D").modulate = Color(0, 1, 0)
-	# instance.path_timer = path_timer
+	instance.get_node("Sprite2D").modulate = Color(0, 0, 1)
+	instance.turn_timer = turn_timer
 	add_child(instance)
-	
-	pass
 
 func spanw_minion(click_position):
 	
@@ -57,13 +53,10 @@ func spanw_minion(click_position):
 	var instance = minion.instantiate()
 	instance.position = click_position
 	instance.team_index = 1
-	instance.get_node("Sprite2D").modulate = Color(0, 0, 1)
-	# instance.path_timer = path_timer
+	instance.get_node("Sprite2D").modulate = Color(0, 1, 0)
+	instance.turn_timer = turn_timer
 	add_child(instance)
-	
-	pass
 
 func reset_scene():
 	if get_tree():
 		get_tree().reload_current_scene()
-	pass

@@ -1,45 +1,62 @@
-[gd_scene load_steps=5 format=3 uid="uid://cjkjpq7jcp28s"]
+[gd_scene load_steps=6 format=3 uid="uid://cjkjpq7jcp28s"]
 
 [ext_resource type="PackedScene" uid="uid://dpf310fgdlv2o" path="res://PlayerScenes/player.tscn" id="1_eywy4"]
 [ext_resource type="Script" path="res://WorldScenes/2DScene/world.gd" id="1_w3pms"]
 [ext_resource type="PackedScene" uid="uid://dttffmy7mkr7w" path="res://TileMaps/debug_map.tscn" id="2_isrbe"]
 [ext_resource type="PackedScene" uid="uid://c5abnsgt63448" path="res://UnitSpawner/unit_spawner.tscn" id="4_ujfjw"]
 
+[sub_resource type="GDScript" id="GDScript_bcy7m"]
+script/source = "extends Timer
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta):
+	pass
+"
+
 [node name="World" type="Node2D" node_paths=PackedStringArray("player")]
 script = ExtResource("1_w3pms")
 player = NodePath("Player")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-visible = false
-position = Vector2(-292, 601)
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
-position = Vector2(208, 204)
-polygon = PackedVector2Array(91, 65, 476, 60, 935, 62, 1229, 57, 1247, 711, 1140, 706, 713, 698, 719, 620, 1138, 583, 1138, 118, 461, 102, 219, 121, 209.474, 545.296, 615, 612, 612, 695, 206, 700, 91, 711)
-
-[node name="DebugMap" parent="." instance=ExtResource("2_isrbe")]
-position = Vector2(-3, 3)
+[node name="TestMap" parent="." instance=ExtResource("2_isrbe")]
+position = Vector2(-587.284, -345)
 scale = Vector2(1.01787, 1.01787)
 
 [node name="Player" parent="." node_paths=PackedStringArray("current_map") instance=ExtResource("1_eywy4")]
-position = Vector2(639, 501)
+position = Vector2(30.7155, -555)
 scale = Vector2(0.480001, 0.480001)
 current_map = NodePath("..")
 
 [node name="TurnTimer" type="Timer" parent="."]
+wait_time = 3.0
 autostart = true
+script = SubResource("GDScript_bcy7m")
 
 [node name="unit_spawner" parent="." node_paths=PackedStringArray("turn_timer", "world") instance=ExtResource("4_ujfjw")]
 modulate = Color(0, 0.52549, 0.333333, 1)
-position = Vector2(105, 497)
+position = Vector2(-321.284, 153)
 team_index = 1
 turn_timer = NodePath("../TurnTimer")
 world = NodePath("..")
 
 [node name="unit_spawner2" parent="." node_paths=PackedStringArray("turn_timer", "world") instance=ExtResource("4_ujfjw")]
 modulate = Color(0, 0.368627, 0.552941, 1)
-position = Vector2(994, 171)
+position = Vector2(308.716, -217)
 team_index = 2
+turn_timer = NodePath("../TurnTimer")
+world = NodePath("..")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(6.71552, -19)
+zoom = Vector2(0.75, 0.75)
+
+[node name="unit_spawner3" parent="." node_paths=PackedStringArray("turn_timer", "world") instance=ExtResource("4_ujfjw")]
+position = Vector2(-4.28448, 0)
 turn_timer = NodePath("../TurnTimer")
 world = NodePath("..")
 

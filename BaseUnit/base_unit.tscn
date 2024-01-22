@@ -4,13 +4,13 @@
 [ext_resource type="Texture2D" uid="uid://41argy5xxcp7" path="res://icon.svg" id="1_6ptyx"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5rl40"]
-radius = 91.2386
+radius = 18.9547
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_04ce5"]
 radius = 62.6418
 
 [node name="BaseUnit" type="CharacterBody2D"]
-scale = Vector2(0.25, 0.25)
+scale = Vector2(0.05, 0.05)
 collision_layer = 2
 collision_mask = 3
 motion_mode = 1
@@ -29,7 +29,8 @@ debug_enabled = true
 collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
-visible = false
+modulate = Color(1, 1, 1, 0.0470588)
+show_behind_parent = true
 scale = Vector2(45.3837, 45.3837)
 shape = SubResource("CircleShape2D_5rl40")
 
@@ -37,8 +38,12 @@ shape = SubResource("CircleShape2D_5rl40")
 shape = SubResource("CircleShape2D_04ce5")
 
 [node name="AttackFrequency" type="Timer" parent="."]
+wait_time = 0.25
 autostart = true
 
+[connection signal="area_entered" from="DetectionArea" to="." method="_on_detection_area_area_entered"]
+[connection signal="area_exited" from="DetectionArea" to="." method="_on_detection_area_area_exited"]
+[connection signal="area_shape_entered" from="DetectionArea" to="." method="_on_detection_area_area_shape_entered"]
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]
 [connection signal="timeout" from="AttackFrequency" to="." method="_on_attack_frequency_timeout"]

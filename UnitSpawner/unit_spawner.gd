@@ -31,40 +31,34 @@ func _ready():
 	pass # Replace with function body.
 
 func _on_control_area_body_entered(body):
+	print("body entered structure area ", body)
 	if "team_index" in body:
 		if body.team_index != team_index:
-			print_debug("enemy entered control area")
+			print("enemy entered structure area, enemy index: ", body.team_index)
 			enemies.push_back(body)
 		else:
-			print_debug("friendly entered control area")
 			friendlies.push_back(body)
 
 func _on_control_area_body_exited(body):
 	if "team_index" in body:
 		if body.team_index != team_index:
-			print_debug("enemy exited control area")
 			enemies.erase(body)
 		else:
-			print_debug("friendly exited control area")
 			friendlies.erase(body)
 
 # happens every turn
 func _on_turn_timer_timeout():
-	
-	print_debug("turn ended")
-	
-	print_debug("spawn counter", spawn_counter)
-	
-	print_debug("convertion counter", convertion_counter)
-	
 	if enemies.is_empty():
 		convertion_counter = 0
 	else:
+		print("converting structure to team ", enemies.pick_random().team_index)
 		if friendlies.is_empty():
 			convertion_counter += 1;
-			
+		if convertion_counter == convertion_turns:
+			team_index = enemies.pick_random().team_index
+			modulate = enemies.pick_random().modulate
+			convertion_counter = 0
 	if spawn_counter == spawn_turns:
-		print_debug("spawning unit")
 		world.spawn_unit(control_area, team_index)
 		spawn_counter = 0
 	else:
@@ -73,6 +67,3 @@ func _on_turn_timer_timeout():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	pass
-
-
-

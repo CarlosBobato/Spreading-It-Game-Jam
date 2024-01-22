@@ -19,11 +19,7 @@ func _physics_process(_delta):
 		if collision.get_collider() is CharacterBody2D:
 			if player == collision.get_collider():
 				player.apply_damage()
-				pass
-			pass
-	pass
 
 func make_path():
 	if player:
 		navigation_agent.target_position = player.global_position
-	pass
