@@ -37,11 +37,18 @@ func _on_detection_area_body_entered(body):
 				enemy = enemies[0]
 				chase_enemy = true
 	elif body as StaticBody2D: 
-		if "team_index" in body && body.team_index == team_index && "source" in body && body.source != self:
-			pheromones.push_back(body)
-			if pheromone == null:
-				pheromone = pheromones.pick_random()
+		if "team_index" in body && "source" in body && body.source != self:
+			if  body.team_index != team_index:
+				pheromone = body
 				chase_pheromone = true
+			else:
+				pheromones.push_back(body)
+				if pheromone == null && !pheromones.is_empty():
+					pheromone = pheromones.pick_random()
+					chase_pheromone = true
+				else:
+					chase_pheromone = false
+					pheromone = null
 
 # Detects if a actor has left the detection zone,
 # if said actor is the same enemy that entered earlier
@@ -80,7 +87,16 @@ func make_path():
 	elif chase_pheromone && pheromone:
 		var random = RandomNumberGenerator.new()
 		random.randomize()
-		navigation_agent.target_position = Vector2(pheromone.source.global_position.x + random.randi_range(-35, 35), pheromone.source.global_position.y +  random.randi_range(-35, 35))
+		navigation_agent.target_position = Vector2(pheromone.position.x + random.randi_range(-55, 55), pheromone.position.y +  random.randi_range(-55, 55))
+		
+		
+		#if "source" in pheromone && str(pheromone.source) == "<Freed Object>": 
+			#navigation_agent.target_position = Vector2(pheromone.global_position.x + random.randi_range(-55, 55), pheromone.global_position.y +  random.randi_range(-55, 55))
+		#else:
+			#navigation_agent.target_position = Vector2(
+				#pheromone.source.position.x + random.randi_range(-35, 35), 
+				#pheromone.source.position.y +  random.randi_range(-35, 35)
+			#)
 	else:
 		var random = RandomNumberGenerator.new()
 		random.randomize()
@@ -135,12 +151,19 @@ func _physics_process(_delta):
 	
 	move_and_slide()
 	
-	if enemy != null && !enemies.is_empty():
+	if enemy == null && !enemies.is_empty():
 		enemy = enemies[0]
+		
+	if str(pheromone) == "<Freed Object>":
+		if pheromones.is_empty():
+			pheromone = null
+			chase_pheromone = false
+		else:
+			pheromone = pheromones.pick_random()
+			chase_pheromone = true
 
 
-
-
-
-
-
+func _on_tree_exited():
+	print("I died ", self)
+	global_position = global_position
+	position = position

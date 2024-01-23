@@ -4,6 +4,8 @@ extends Node2D
 
 @onready var turn_timer := $TurnTimer as Timer
 
+var turn_counter: int
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -60,3 +62,8 @@ func spanw_minion(click_position):
 func reset_scene():
 	if get_tree():
 		get_tree().reload_current_scene()
+
+
+func _on_turn_timer_timeout():
+	turn_counter += 1
+	print("turn tick ", turn_counter)

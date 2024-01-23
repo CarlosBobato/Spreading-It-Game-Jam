@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://c5abnsgt63448"]
 
 [ext_resource type="Script" path="res://UnitSpawner/unit_spawner.gd" id="1_ew31j"]
-[ext_resource type="Texture2D" uid="uid://41argy5xxcp7" path="res://icon.svg" id="1_pv4k6"]
+[ext_resource type="Texture2D" uid="uid://ytiw70samq5i" path="res://Textures/UnitSpawner.png" id="2_rcvgn"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6o0ja"]
 radius = 257.194
@@ -16,7 +16,7 @@ script = ExtResource("1_ew31j")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.75, 0.75)
-texture = ExtResource("1_pv4k6")
+texture = ExtResource("2_rcvgn")
 
 [node name="ControlArea" type="Area2D" parent="."]
 
