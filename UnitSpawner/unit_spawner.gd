@@ -30,25 +30,25 @@ var friendlies: Array
 func _ready():
 	pass # Replace with function body.
 
-func _on_control_area_body_entered(body):
-	print("body entered structure ", body)
-	if "team_index" in body:
-		if body.team_index != team_index:
-			if !enemies.has(body):
-				print("enemy entered structure, enemy index: ", body.team_index)
-				enemies.push_back(body)
+func _on_control_area_area_entered(area):
+	print("area entered structure ", area, "team_index" in area)
+	if "team_index" in area:
+		if area.team_index != team_index:
+			if !enemies.has(area):
+				print("enemy entered structure, enemy index: ", area.team_index)
+				enemies.push_back(area)
 		else:
-			if !friendlies.has(body):
-				friendlies.push_back(body)
+			if !friendlies.has(area):
+				friendlies.push_back(area)
 
-func _on_control_area_body_exited(body):
-	if "team_index" in body:
-		if body.team_index != team_index:
-			if enemies.has(body):
-				enemies.erase(body)
+func _on_control_area_area_exited(area):
+	if "team_index" in area:
+		if area.team_index != team_index:
+			if enemies.has(area):
+				enemies.erase(area)
 		else:
-			if friendlies.has(body):
-				friendlies.erase(body)
+			if friendlies.has(area):
+				friendlies.erase(area)
 
 # happens every turn
 func _on_turn_timer_timeout():
@@ -59,10 +59,14 @@ func _on_turn_timer_timeout():
 	else:
 		print("converting structure to team ", enemies.pick_random().team_index)
 		if friendlies.is_empty():
-			convertion_counter += 1;
-		if convertion_counter == convertion_turns:
+			convertion_counter += 1
+		else:
+			print("convertion being contested ", self)
+			
+		if convertion_counter >= convertion_turns:
 			team_index = enemies.pick_random().team_index
 			modulate = enemies.pick_random().modulate
+			print("converted to team ", team_index)
 			convertion_counter = 0
 	if spawn_counter == spawn_turns:
 		world.spawn_unit(control_area, team_index)

@@ -74,7 +74,7 @@ func _on_detection_area_body_exited(body):
 				chase_pheromone = true
 
 func apply_damage():
-	if current_health <= 1:
+	if current_health < 1:
 		# call self destruction through the world node
 		modulate = Color( 1, 0.1, 0.25, 0.5)
 		get_node(".").queue_free()
@@ -87,16 +87,9 @@ func make_path():
 	elif chase_pheromone && pheromone:
 		var random = RandomNumberGenerator.new()
 		random.randomize()
-		navigation_agent.target_position = Vector2(pheromone.position.x + random.randi_range(-55, 55), pheromone.position.y +  random.randi_range(-55, 55))
+		var target_position = Vector2(pheromone.position.x + random.randi_range(-55, 55), pheromone.position.y +  random.randi_range(-55, 55))
+		navigation_agent.target_position = target_position
 		
-		
-		#if "source" in pheromone && str(pheromone.source) == "<Freed Object>": 
-			#navigation_agent.target_position = Vector2(pheromone.global_position.x + random.randi_range(-55, 55), pheromone.global_position.y +  random.randi_range(-55, 55))
-		#else:
-			#navigation_agent.target_position = Vector2(
-				#pheromone.source.position.x + random.randi_range(-35, 35), 
-				#pheromone.source.position.y +  random.randi_range(-35, 35)
-			#)
 	else:
 		var random = RandomNumberGenerator.new()
 		random.randomize()
@@ -112,6 +105,9 @@ func _on_attack_frequency_timeout():
 			if chase_enemy:
 				if enemies.has(collider):
 					collider.apply_damage()
+		elif collider is TileMap:
+			print("I am killing myself ", self, current_health)
+			apply_damage()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

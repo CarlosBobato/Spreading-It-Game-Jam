@@ -39,21 +39,26 @@ script = SubResource("GDScript_bcy7m")
 
 [node name="unit_spawner" parent="." node_paths=PackedStringArray("turn_timer", "world") instance=ExtResource("4_ujfjw")]
 modulate = Color(0, 0.52549, 0.333333, 1)
-position = Vector2(-138, -77)
+position = Vector2(-216, 83)
 team_index = 1
 turn_timer = NodePath("../TurnTimer")
 world = NodePath("..")
 
 [node name="unit_spawner2" parent="." node_paths=PackedStringArray("turn_timer", "world") instance=ExtResource("4_ujfjw")]
 modulate = Color(0, 0.368627, 0.552941, 1)
-position = Vector2(73, -76)
+position = Vector2(617, 176)
 team_index = 2
 turn_timer = NodePath("../TurnTimer")
 world = NodePath("..")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(6.71552, -19)
+position = Vector2(129, -23)
 zoom = Vector2(0.75, 0.75)
+
+[node name="unit_spawner3" parent="." node_paths=PackedStringArray("turn_timer", "world") instance=ExtResource("4_ujfjw")]
+position = Vector2(134, -162)
+turn_timer = NodePath("../TurnTimer")
+world = NodePath("..")
 
 [connection signal="timeout" from="TurnTimer" to="." method="_on_turn_timer_timeout"]
 [connection signal="timeout" from="TurnTimer" to="unit_spawner" method="_on_turn_timer_timeout"]

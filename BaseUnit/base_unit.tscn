@@ -1,10 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://dj77n252ymdmw"]
+[gd_scene load_steps=6 format=3 uid="uid://dj77n252ymdmw"]
 
 [ext_resource type="Script" path="res://BaseUnit/base_unit.gd" id="1_3d14g"]
 [ext_resource type="Texture2D" uid="uid://bf3iyp72q31tl" path="res://Textures/Tier1Unit.png" id="2_5hn6b"]
+[ext_resource type="Script" path="res://BaseUnit/DetectionArea.gd" id="3_l7w8x"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5rl40"]
-radius = 18.9547
+radius = 40.9862
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_04ce5"]
 radius = 62.6418
@@ -27,6 +28,7 @@ debug_enabled = true
 
 [node name="DetectionArea" type="Area2D" parent="."]
 collision_mask = 3
+script = ExtResource("3_l7w8x")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
 modulate = Color(1, 1, 1, 0.0470588)
