@@ -6,7 +6,7 @@ extends CharacterBody2D
 @export var team_index = 0
 
 # movement
-@export var base_speed = 35
+@export var base_speed = 55
 
 var pheromones:Array
 var chase_pheromone:= false as bool
@@ -87,13 +87,13 @@ func make_path():
 	elif chase_pheromone && pheromone:
 		var random = RandomNumberGenerator.new()
 		random.randomize()
-		var target_position = Vector2(pheromone.position.x + random.randi_range(-55, 55), pheromone.position.y +  random.randi_range(-55, 55))
+		var target_position = Vector2(pheromone.position.x + random.randi_range(-85, 85), pheromone.position.y +  random.randi_range(-85, 85))
 		navigation_agent.target_position = target_position
 		
 	else:
 		var random = RandomNumberGenerator.new()
 		random.randomize()
-		navigation_agent.target_position = Vector2(global_position.x + random.randi_range(-70, 70), global_position.y + random.randi_range(-70, 70))
+		navigation_agent.target_position = Vector2(global_position.x + random.randi_range(-170, 170), global_position.y + random.randi_range(-170, 170))
 
 func _on_attack_frequency_timeout():
 	if chase_enemy:
@@ -106,12 +106,19 @@ func _on_attack_frequency_timeout():
 				if enemies.has(collider):
 					collider.apply_damage()
 		elif collider is TileMap:
-			print("I am killing myself ", self, current_health)
 			apply_damage()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	turn_timer.timeout.connect(_on_turn_timer_timeout)
+	if team_index == 1:
+		modulate = Color(0, 1, 0)
+	elif team_index == 2:
+		modulate = Color(0, 0, 1)
+	elif team_index == 3:
+		modulate = Color(1, 0, 0)
+	else:
+		modulate = Color(0.5, 0.5, 0.5)
 
 func spawn_pheromone_area():
 	var random = RandomNumberGenerator.new()
@@ -124,12 +131,6 @@ func spawn_pheromone_area():
 	pheronome_instance.team_index = team_index
 	pheronome_instance.dissipation_turns = 7
 	pheronome_instance.source = self
-	if team_index == 1:
-		pheronome_instance.modulate = Color(randf_range(0.0, 1.0), 1, randf_range(0.0, 1.0), 0.5)
-	elif team_index == 2:
-		pheronome_instance.modulate = Color(randf_range(0.0, 1.0), randf_range(0.0, 1.0), 1, 0.5)
-	else:
-		pheronome_instance.modulate = Color(randf_range(0.0, 1.0), randf_range(0.0, 1.0), randf_range(0.0, 1.0), 0.5)
 	
 	# instanciates unit on map
 	get_tree().current_scene.add_child(pheronome_instance)
@@ -157,9 +158,3 @@ func _physics_process(_delta):
 		else:
 			pheromone = pheromones.pick_random()
 			chase_pheromone = true
-
-
-func _on_tree_exited():
-	print("I died ", self)
-	global_position = global_position
-	position = position

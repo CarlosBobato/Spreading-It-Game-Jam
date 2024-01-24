@@ -33,7 +33,6 @@ scale = Vector2(0.480001, 0.480001)
 current_map = NodePath("..")
 
 [node name="TurnTimer" type="Timer" parent="."]
-wait_time = 3.0
 autostart = true
 script = SubResource("GDScript_bcy7m")
 

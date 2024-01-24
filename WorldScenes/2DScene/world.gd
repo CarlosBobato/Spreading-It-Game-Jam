@@ -32,11 +32,6 @@ func spawn_unit(spawn_area: Area2D, team_index: int):
 		instance.team_index = team_index
 		instance.turn_timer = turn_timer
 		
-		if team_index == 1:
-			instance.get_node("Sprite2D").modulate = Color(0, 1, 0)
-		elif team_index == 2:
-			instance.get_node("Sprite2D").modulate = Color(0, 0, 1)
-		
 		add_child(instance)
 
 func spawn_enemy(click_position):

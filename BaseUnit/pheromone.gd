@@ -10,7 +10,20 @@ var dissipation_counter := 0 as int
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	var random = RandomNumberGenerator.new()
+	random.randomize()
+	
 	turn_timer.timeout.connect(_on_turn_timer_timeout)
+	
+	if team_index == 1:
+		modulate = Color(randf_range(0.0, 1.0), 1, randf_range(0.0, 1.0), 0.5)
+	elif team_index == 2:
+		modulate = Color(randf_range(0.0, 1.0), randf_range(0.0, 1.0), 1, 0.5)
+	elif team_index == 3:
+		modulate = Color(1, randf_range(0.0, 1.0), randf_range(0.0, 1.0), 0.5)
+	else:
+		modulate = Color(randf_range(0.0, 0.5), randf_range(0.0, 0.5), randf_range(0.0, 0.5), 0.5)
+	
 
 func _on_turn_timer_timeout():
 	if dissipation_counter >= dissipation_turns:

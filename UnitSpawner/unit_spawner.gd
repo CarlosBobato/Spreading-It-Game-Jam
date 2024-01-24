@@ -42,8 +42,10 @@ func _on_control_area_area_entered(area):
 				friendlies.push_back(area)
 
 func _on_control_area_area_exited(area):
+	print("area exited structure ", area, "team_index" in area)
 	if "team_index" in area:
 		if area.team_index != team_index:
+			print("enemy exited structure ", area.team_index)
 			if enemies.has(area):
 				enemies.erase(area)
 		else:
