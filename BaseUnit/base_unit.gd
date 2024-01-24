@@ -37,18 +37,24 @@ func _on_detection_area_body_entered(body):
 				enemy = enemies[0]
 				chase_enemy = true
 	elif body as StaticBody2D: 
-		if "team_index" in body && "source" in body && body.source != self:
-			if  body.team_index != team_index:
-				pheromone = body
-				chase_pheromone = true
-			else:
-				pheromones.push_back(body)
-				if pheromone == null && !pheromones.is_empty():
-					pheromone = pheromones.pick_random()
+		if "team_index" in body:
+			if "source" in body && body.source != self:
+				if  body.team_index != team_index:
+					pheromone = body
 					chase_pheromone = true
 				else:
-					chase_pheromone = false
-					pheromone = null
+					pheromones.push_back(body)
+					if pheromone == null && !pheromones.is_empty():
+						pheromone = pheromones.pick_random()
+						chase_pheromone = true
+					else:
+						chase_pheromone = false
+						pheromone = null
+			elif "unit_spawner" in body:
+				if body.team_index != team_index:
+					print(self, " I am chasing the enemy structure ", body.team_index)
+					pheromone = body
+					chase_pheromone = true
 
 # Detects if a actor has left the detection zone,
 # if said actor is the same enemy that entered earlier
@@ -81,10 +87,12 @@ func apply_damage():
 	else:
 		current_health = current_health - 1
 
+
 func make_path():
 	if chase_enemy && enemy:
 		navigation_agent.target_position = enemy.global_position
 	elif chase_pheromone && pheromone:
+		print(self, " I am going towards the pheromone ", pheromone)
 		var random = RandomNumberGenerator.new()
 		random.randomize()
 		var target_position = Vector2(pheromone.position.x + random.randi_range(-85, 85), pheromone.position.y +  random.randi_range(-85, 85))
@@ -158,3 +166,8 @@ func _physics_process(_delta):
 		else:
 			pheromone = pheromones.pick_random()
 			chase_pheromone = true
+
+
+
+
+

@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://c5abnsgt63448"]
+[gd_scene load_steps=6 format=3 uid="uid://c5abnsgt63448"]
 
 [ext_resource type="Script" path="res://UnitSpawner/unit_spawner.gd" id="1_ew31j"]
 [ext_resource type="Texture2D" uid="uid://ytiw70samq5i" path="res://Textures/UnitSpawner.png" id="2_rcvgn"]
+[ext_resource type="Script" path="res://UnitSpawner/ControlArea.gd" id="3_6qigq"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6o0ja"]
 radius = 257.194
@@ -19,6 +20,9 @@ scale = Vector2(0.75, 0.75)
 texture = ExtResource("2_rcvgn")
 
 [node name="ControlArea" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("3_6qigq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ControlArea"]
 shape = SubResource("CircleShape2D_6o0ja")
