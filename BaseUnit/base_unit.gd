@@ -45,7 +45,7 @@ func _on_detection_area_body_entered(body):
 				else:
 					pheromones.push_back(body)
 					if pheromone == null && !pheromones.is_empty():
-						pheromone = pheromones.pick_random()
+						pheromone = pheromones[0]
 						chase_pheromone = true
 					else:
 						chase_pheromone = false
@@ -76,14 +76,14 @@ func _on_detection_area_body_exited(body):
 				pheromone = null
 				chase_pheromone = false
 			else:
-				pheromone = pheromones.pick_random()
+				pheromone = pheromones[0]
 				chase_pheromone = true
 
 func apply_damage():
 	if current_health < 1:
 		# call self destruction through the world node
 		modulate = Color( 1, 0.1, 0.25, 0.5)
-		get_node(".").queue_free()
+		queue_free()
 	else:
 		current_health = current_health - 1
 
@@ -164,7 +164,7 @@ func _physics_process(_delta):
 			pheromone = null
 			chase_pheromone = false
 		else:
-			pheromone = pheromones.pick_random()
+			pheromone = pheromones[0]
 			chase_pheromone = true
 
 

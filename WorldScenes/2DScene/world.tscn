@@ -39,36 +39,21 @@ script = SubResource("GDScript_bcy7m")
 
 [node name="unit_spawner" parent="." node_paths=PackedStringArray("turn_timer", "world") instance=ExtResource("4_ujfjw")]
 modulate = Color(0, 0.52549, 0.333333, 1)
-position = Vector2(-116, 378)
-team_index = 1
-turn_timer = NodePath("../TurnTimer")
-world = NodePath("..")
-
-[node name="unit_spawner3" parent="." node_paths=PackedStringArray("turn_timer", "world") instance=ExtResource("4_ujfjw")]
-modulate = Color(0, 0.52549, 0.333333, 1)
-position = Vector2(-161, 64)
-team_index = 1
-turn_timer = NodePath("../TurnTimer")
-world = NodePath("..")
-
-[node name="unit_spawner5" parent="." node_paths=PackedStringArray("turn_timer", "world") instance=ExtResource("4_ujfjw")]
-modulate = Color(0, 0.52549, 0.333333, 1)
-position = Vector2(3, -389)
+position = Vector2(-72, 263)
 team_index = 1
 turn_timer = NodePath("../TurnTimer")
 world = NodePath("..")
 
 [node name="unit_spawner2" parent="." node_paths=PackedStringArray("turn_timer", "world") instance=ExtResource("4_ujfjw")]
 modulate = Color(0, 0.368627, 0.552941, 1)
-position = Vector2(759, 270)
+position = Vector2(489, 400)
 team_index = 2
 turn_timer = NodePath("../TurnTimer")
 world = NodePath("..")
 
-[node name="unit_spawner4" parent="." node_paths=PackedStringArray("turn_timer", "world") instance=ExtResource("4_ujfjw")]
+[node name="unit_spawner3" parent="." node_paths=PackedStringArray("turn_timer", "world") instance=ExtResource("4_ujfjw")]
 modulate = Color(0, 0.368627, 0.552941, 1)
-position = Vector2(569, 50)
-team_index = 2
+position = Vector2(165, -365)
 turn_timer = NodePath("../TurnTimer")
 world = NodePath("..")
 

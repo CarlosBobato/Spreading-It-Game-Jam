@@ -82,6 +82,8 @@ func _on_turn_timer_timeout():
 			convertion_counter = 0
 	if spawn_counter == spawn_turns:
 		world.spawn_unit(control_area, team_index)
+		world.spawn_unit(control_area, team_index)
+		world.spawn_unit(control_area, team_index)
 		spawn_counter = 0
 	else:
 		spawn_counter += 1
