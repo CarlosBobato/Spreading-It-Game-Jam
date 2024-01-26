@@ -18,13 +18,22 @@ motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_3d14g")
 
+[node name="Label" type="Label" parent="."]
+offset_left = -360.0
+offset_top = -460.0
+offset_right = -310.0
+offset_bottom = -430.0
+scale = Vector2(15, 15)
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_5hn6b")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 path_postprocessing = 1
 avoidance_enabled = true
-debug_enabled = true
 
 [node name="DetectionArea" type="Area2D" parent="."]
 collision_layer = 4

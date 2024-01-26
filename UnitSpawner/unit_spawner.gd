@@ -20,6 +20,8 @@ var convertion_counter = 0
 # level in which the spawner is placed
 @export var world: Node2D
 
+@onready var spawn_label := $SpawnLabel as Label
+
 # enemies that entered the control area
 var enemies: Array
 
@@ -37,13 +39,14 @@ func _ready():
 		modulate = Color(1, 0, 0)
 	else:
 		modulate = Color(0.5, 0.5, 0.5)
+	
+	spawn_counter = 0
+	spawn_label.text = str(spawn_counter)
 
 func _on_control_area_area_entered(area):
-	print("area entered structure ", area, "team_index" in area)
 	if "team_index" in area:
 		if area.team_index != team_index:
 			if !enemies.has(area):
-				print("enemy entered structure, enemy index: ", area.team_index)
 				enemies.push_back(area)
 				area.BaseUnit.spawn_pheromone_area()
 		else:
@@ -51,10 +54,8 @@ func _on_control_area_area_entered(area):
 				friendlies.push_back(area)
 
 func _on_control_area_area_exited(area):
-	print("area exited structure ", area, "team_index" in area)
 	if "team_index" in area:
 		if area.team_index != team_index:
-			print("enemy exited structure ", area.team_index)
 			if enemies.has(area):
 				enemies.erase(area)
 				area.BaseUnit.spawn_pheromone_area()
@@ -65,29 +66,24 @@ func _on_control_area_area_exited(area):
 # happens every turn
 func _on_turn_timer_timeout():
 	if enemies.is_empty():
-		if convertion_counter > 0:
-			print("setting structure conversion to 0 ", self)
 		convertion_counter = 0
 	else:
-		print("converting structure to team ", self)
 		if friendlies.is_empty():
 			convertion_counter += 1
-		else:
-			print("convertion being contested ", self)
 			
 		if convertion_counter >= convertion_turns:
 			team_index = enemies.pick_random().team_index
 			modulate = enemies.pick_random().modulate
-			print("converted to team ", team_index)
 			convertion_counter = 0
 	if spawn_counter == spawn_turns:
 		world.spawn_unit(control_area, team_index)
 		world.spawn_unit(control_area, team_index)
 		world.spawn_unit(control_area, team_index)
 		spawn_counter = 0
+		spawn_label.text = str(spawn_counter)
 	else:
 		spawn_counter += 1
-		# print("spawn counter ", spawn_counter, " ", self)
+		spawn_label.text = str(spawn_counter)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):

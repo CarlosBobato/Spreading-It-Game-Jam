@@ -16,21 +16,24 @@ func _ready():
 	turn_timer.timeout.connect(_on_turn_timer_timeout)
 	
 	if team_index == 1:
-		modulate = Color(randf_range(0.0, 1.0), 1, randf_range(0.0, 1.0), 0.5)
+		modulate = Color(randf_range(0.0, 1.0), 1, randf_range(0.0, 1.0), 0.1)
 	elif team_index == 2:
-		modulate = Color(randf_range(0.0, 1.0), randf_range(0.0, 1.0), 1, 0.5)
+		modulate = Color(randf_range(0.0, 1.0), randf_range(0.0, 1.0), 1, 0.1)
 	elif team_index == 3:
-		modulate = Color(1, randf_range(0.0, 1.0), randf_range(0.0, 1.0), 0.5)
+		modulate = Color(1, randf_range(0.0, 1.0), randf_range(0.0, 1.0), 0.1)
 	else:
-		modulate = Color(randf_range(0.0, 0.5), randf_range(0.0, 0.5), randf_range(0.0, 0.5), 0.5)
+		modulate = Color(randf_range(0.0, 0.5), randf_range(0.0, 0.5), randf_range(0.0, 0.5), 0.1)
 	
 
 func _on_turn_timer_timeout():
 	if dissipation_counter >= dissipation_turns:
-		get_node(".").queue_free()
+		queue_free()
 	else:
+		var random = RandomNumberGenerator.new()
+		random.randomize()
 		dissipation_counter += 1
-		get_node("CollisionShape2D").scale = Vector2((2 * dissipation_counter * 0.1), (2 * dissipation_counter * 0.1)) 
+		scale = Vector2((randi_range(-1, 1) * dissipation_counter * 7), (randi_range(-1, 1) * dissipation_counter * 7))
+		rotation = (randf_range(-2, 2) * dissipation_counter * 0.01)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):

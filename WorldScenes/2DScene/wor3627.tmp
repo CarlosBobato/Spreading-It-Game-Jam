@@ -1,0 +1,79 @@
+[gd_scene load_steps=6 format=3 uid="uid://cjkjpq7jcp28s"]
+
+[ext_resource type="PackedScene" uid="uid://dpf310fgdlv2o" path="res://PlayerScenes/player.tscn" id="1_eywy4"]
+[ext_resource type="Script" path="res://WorldScenes/2DScene/world.gd" id="1_w3pms"]
+[ext_resource type="PackedScene" uid="uid://dttffmy7mkr7w" path="res://TileMaps/debug_map.tscn" id="2_isrbe"]
+[ext_resource type="PackedScene" uid="uid://c5abnsgt63448" path="res://UnitSpawner/unit_spawner.tscn" id="4_ujfjw"]
+
+[sub_resource type="GDScript" id="GDScript_bcy7m"]
+script/source = "extends Timer
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta):
+	pass
+"
+
+[node name="World" type="Node2D" node_paths=PackedStringArray("player")]
+script = ExtResource("1_w3pms")
+player = NodePath("Player")
+
+[node name="TestMap" parent="." instance=ExtResource("2_isrbe")]
+position = Vector2(-483, -341)
+
+[node name="Player" parent="." node_paths=PackedStringArray("current_map") instance=ExtResource("1_eywy4")]
+visible = false
+position = Vector2(-375, 96)
+scale = Vector2(0.480001, 0.480001)
+current_map = NodePath("..")
+
+[node name="TurnTimer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+script = SubResource("GDScript_bcy7m")
+
+[node name="unit_spawner" parent="." node_paths=PackedStringArray("turn_timer", "world") instance=ExtResource("4_ujfjw")]
+modulate = Color(0, 0.52549, 0.333333, 1)
+position = Vector2(57, -49)
+team_index = 1
+turn_timer = NodePath("../TurnTimer")
+world = NodePath("..")
+
+[node name="unit_spawner2" parent="." node_paths=PackedStringArray("turn_timer", "world") instance=ExtResource("4_ujfjw")]
+modulate = Color(0, 0.368627, 0.552941, 1)
+position = Vector2(355, 52)
+team_index = 2
+turn_timer = NodePath("../TurnTimer")
+world = NodePath("..")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(187, -23)
+zoom = Vector2(0.75, 0.75)
+
+[node name="TurnLabel" type="Label" parent="."]
+offset_left = 816.0
+offset_top = -433.0
+offset_right = 856.0
+offset_bottom = -410.0
+scale = Vector2(3, 3)
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CounterLabel" type="Label" parent="."]
+offset_left = 857.0
+offset_top = -363.0
+offset_right = 897.0
+offset_bottom = -340.0
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="timeout" from="TurnTimer" to="." method="_on_turn_timer_timeout"]
+[connection signal="timeout" from="TurnTimer" to="unit_spawner" method="_on_turn_timer_timeout"]
+[connection signal="timeout" from="TurnTimer" to="unit_spawner2" method="_on_turn_timer_timeout"]

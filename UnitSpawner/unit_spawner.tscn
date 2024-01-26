@@ -30,6 +30,16 @@ shape = SubResource("CircleShape2D_6o0ja")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_f0qtx")
 
+[node name="SpawnLabel" type="Label" parent="."]
+offset_left = -98.0
+offset_top = -178.0
+offset_right = -58.0
+offset_bottom = -155.0
+scale = Vector2(5, 5)
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="area_entered" from="ControlArea" to="." method="_on_control_area_area_entered"]
 [connection signal="area_exited" from="ControlArea" to="." method="_on_control_area_area_exited"]
 [connection signal="body_shape_entered" from="ControlArea" to="." method="_on_control_area_body_shape_entered"]

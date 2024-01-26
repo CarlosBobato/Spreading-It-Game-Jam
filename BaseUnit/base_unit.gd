@@ -21,8 +21,10 @@ var enemy: CharacterBody2D
 
 @onready var navigation_agent := $NavigationAgent2D as NavigationAgent2D
 
+@onready var health_counter := $Label as Label
+
 # health values
-@export var max_health = 10
+@export var max_health = 100
 var current_health = max_health
 
 # Detects if an enemy unit entered the zone,
@@ -52,9 +54,10 @@ func _on_detection_area_body_entered(body):
 						pheromone = null
 			elif "unit_spawner" in body:
 				if body.team_index != team_index:
-					print(self, " I am chasing the enemy structure ", body.team_index)
 					pheromone = body
 					chase_pheromone = true
+					
+	# call_deferred("spawn_pheromone_area")
 
 # Detects if a actor has left the detection zone,
 # if said actor is the same enemy that entered earlier
@@ -86,16 +89,16 @@ func apply_damage():
 		queue_free()
 	else:
 		current_health = current_health - 1
+		health_counter.text = str(current_health)
 
 
 func make_path():
 	if chase_enemy && enemy:
 		navigation_agent.target_position = enemy.global_position
 	elif chase_pheromone && pheromone:
-		print(self, " I am going towards the pheromone ", pheromone)
 		var random = RandomNumberGenerator.new()
 		random.randomize()
-		var target_position = Vector2(pheromone.position.x + random.randi_range(-85, 85), pheromone.position.y +  random.randi_range(-85, 85))
+		var target_position = Vector2(pheromone.position.x + random.randi_range(-7, 7), pheromone.position.y +  random.randi_range(-7, 7))
 		navigation_agent.target_position = target_position
 		
 	else:
@@ -119,6 +122,8 @@ func _on_attack_frequency_timeout():
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	turn_timer.timeout.connect(_on_turn_timer_timeout)
+	current_health = max_health
+	health_counter.text = str(current_health)
 	if team_index == 1:
 		modulate = Color(0, 1, 0)
 	elif team_index == 2:
@@ -137,7 +142,7 @@ func spawn_pheromone_area():
 	pheronome_instance.position = global_position
 	pheronome_instance.turn_timer = turn_timer
 	pheronome_instance.team_index = team_index
-	pheronome_instance.dissipation_turns = 7
+	pheronome_instance.dissipation_turns = 3
 	pheronome_instance.source = self
 	
 	# instanciates unit on map
@@ -164,7 +169,7 @@ func _physics_process(_delta):
 			pheromone = null
 			chase_pheromone = false
 		else:
-			pheromone = pheromones[0]
+			pheromone = pheromones.pick_random()
 			chase_pheromone = true
 
 
